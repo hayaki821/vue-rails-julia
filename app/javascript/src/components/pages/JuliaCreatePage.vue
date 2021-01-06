@@ -1,79 +1,71 @@
 <template>
-  <form>
-    <div v-if="errors.length != 0">
-      <ul v-for="e in errors" :key="e">
-        <li>
-          <p color="red">{{ e }}</p>
-        </li>
-      </ul>
-    </div>
-    <div>
-      <label>Name</label>
-      <input v-model="employee.name" type="text" />
-    </div>
-    <div>
-      <label>Department</label>
-      <input v-model="employee.department" type="text" />
-    </div>
-    <div>
-      <label>Gender</label>
-      <select v-model="employee.gender">
-        <option>other</option>
-        <option>male</option>
-        <option>female</option>
-      </select>
-    </div>
-    <div>
-      <label>Birth</label>
-      <input v-model="employee.birth" type="date" />
-    </div>
-    <div>
-      <label>Joined Date</label>
-      <input v-model="employee.joined_date" type="date" />
-    </div>
-    <div>
-      <label>Payment</label>
-      <input v-model="employee.payment" type="number" min="0" />
-    </div>
-    <div>
-      <label>Note</label>
-      <input v-model="employee.note" type="text" />
-    </div>
-    <button @click.prevent="$emit('submit')">Commit</button>
-  </form>
-  <div class="row">
-    <div class="col s10 m11">
-      <input
-        v-model="newTask"
-        class="form-control"
-        placeholder="Add your task!!"
-      />
-    </div>
-    <div class="col s2 m1">
-      <div
-        @click="createTask"
-        class="btn-floating waves-effect waves-light red"
-      >
-        <i class="material-icons">add</i>
+  <div class="container">
+    <form>
+      <div v-if="errors.length != 0">
+        <ul v-for="e in errors" :key="e">
+          <li>
+            <p color="red">{{ e }}</p>
+          </li>
+        </ul>
       </div>
-    </div>
+      <div>
+        <label>実数部最小値</label>
+        <input v-model="juliaParams.min_x" type="number" />
+      </div>
+      <div>
+        <label>実数部最大値</label>
+        <input v-model="juliaParams.max_x" type="number" />
+      </div>
+      <div>
+        <label>虚数部最小値</label>
+        <input v-model="juliaParams.min_y" type="number" />
+      </div>
+      <div>
+        <label>虚数部最大値</label>
+        <input v-model="juliaParams.max_y" type="number" />
+      </div>
+      <div>
+        <label>複素定数(実部)</label>
+        <input v-model="juliaParams.comp_const.re" type="number" />
+      </div>
+      <div>
+        <label>複素定数(虚部)</label>
+        <input v-model="juliaParams.comp_const.im" type="number" />
+      </div>
+      <button @click.prevent="createJulia">ジュリア集合を作成する</button>
+    </form>
+    <juliaCanvas />
   </div>
 </template>
 <script>
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
+//import { useValidation } from "vue-composable";# ダウンロード
+import juliaCanvas from "@/components/organisms/JuliaCanvas.vue";
+
 export default {
   name: "juliaCreate",
+  components: { juliaCanvas },
   setup() {
     const juliaParams = reactive({
       min_x: "",
       max_x: "",
       min_y: "",
       max_y: "",
-      comp_const: "",
+      comp_const: { re: "", im: "" },
     });
-    const compConstRe = ref("");
-    const compConstIm = ref("");
     const errors = ref([]);
+
+    const createJulia = () => {
+      // validete
+      //if validete return
+      console.log(juliaParams);
+    };
+
+    return {
+      juliaParams,
+      errors,
+      createJulia,
+    };
   },
 };
 </script>
