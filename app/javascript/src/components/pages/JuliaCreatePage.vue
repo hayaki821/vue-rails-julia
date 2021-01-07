@@ -10,31 +10,39 @@
       </div>
       <div>
         <label>実数部最小値</label>
-        <input v-model="juliaParams.min_x" type="number" />
+        <input v-model.number="juliaParams.min_x" type="number" step="0.1" />
       </div>
       <div>
         <label>実数部最大値</label>
-        <input v-model="juliaParams.max_x" type="number" />
+        <input v-model.number="juliaParams.max_x" type="number" step="0.1" />
       </div>
       <div>
         <label>虚数部最小値</label>
-        <input v-model="juliaParams.min_y" type="number" />
+        <input v-model.number="juliaParams.min_y" type="number" step="0.1" />
       </div>
       <div>
         <label>虚数部最大値</label>
-        <input v-model="juliaParams.max_y" type="number" />
+        <input v-model.number="juliaParams.max_y" type="number" step="0.1" />
       </div>
       <div>
         <label>複素定数(実部)</label>
-        <input v-model="juliaParams.comp_const.re" type="number" />
+        <input
+          v-model.number="juliaParams.comp_const.re"
+          type="number"
+          step="0.1"
+        />
       </div>
       <div>
         <label>複素定数(虚部)</label>
-        <input v-model="juliaParams.comp_const.im" type="number" />
+        <input
+          v-model.number="juliaParams.comp_const.im"
+          type="number"
+          step="0.1"
+        />
       </div>
       <button @click.prevent="createJulia">ジュリア集合を作成する</button>
     </form>
-    <juliaCanvas />
+    <juliaCanvas :imageData="imageData" />
   </div>
 </template>
 <script>
@@ -49,13 +57,14 @@ export default {
   components: { juliaCanvas },
   setup() {
     const juliaParams = reactive({
-      min_x: 0,
-      max_x: 0,
-      min_y: 0,
-      max_y: 0,
-      comp_const: { re: 0, im: 0 },
+      min_x: -1.5,
+      max_x: 1.5,
+      min_y: -1.5,
+      max_y: 1.5,
+      comp_const: { re: 0.3, im: 0.5 },
     });
     const errors = ref([]);
+    const imageData = ref([]);
 
     const createJulia = () => {
       // validete
@@ -64,9 +73,8 @@ export default {
       axios
         .post("/api/julias/create", juliaParams)
         .then((response) => {
-          console.log("create");
-          let e = response.data;
-          console.log(e, response);
+          imageData.value = response.data.image_data;
+          console.log(imageData.value);
         })
         .catch((error) => {
           console.error(error);
@@ -78,6 +86,7 @@ export default {
 
     return {
       juliaParams,
+      imageData,
       errors,
       createJulia,
     };
