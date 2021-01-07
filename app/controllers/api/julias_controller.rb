@@ -1,9 +1,8 @@
 class Api::JuliasController < ApplicationController
     before_action :params_type_validate, only: [:create]
-  # POST /tasks
+  # POST /julias/create
   def create
-    # create model
-    #render plain: julia_params.inspect
+    # create julia
     min_x = julia_params[:min_x]
     max_x = julia_params[:max_x]
     min_y = julia_params[:min_y]
@@ -19,13 +18,6 @@ class Api::JuliasController < ApplicationController
     draw_julia_create(image_data,max_x, min_x, max_y, min_y, width, height, count, c_real, c_imag)
  
     render json: {:image_data=>image_data}
-    
-    # if employee.save
-    #     render json: employee, status: :created
-    #   else
-    #     render json: { errors: employee.errors.full_messages }, status: :unprocessable_entity
-    #   endder json: @task.errors, status: :unprocessable_entity
-    # end
   end
 
   private
@@ -42,10 +34,10 @@ class Api::JuliasController < ApplicationController
         # because comp_const is hash
         if key == "comp_const"
             value.each do |c_key, c_value|
-                check_int(c_key, c_value, errors)
+                check_number(c_key, c_value, errors)
             end
         else
-            check_int(key, value, errors)
+            check_number(key, value, errors)
         end
     end
     if errors.length != 0 
@@ -54,7 +46,7 @@ class Api::JuliasController < ApplicationController
   end
 
   # check type int
-  def check_int(key, value, errors)
+  def check_number(key, value, errors)
     if !value.is_a?(Float)
         errors.push({key=> "数値を入力してください"})
     end
@@ -99,7 +91,8 @@ class Api::JuliasController < ApplicationController
 
   # Calculation color
   def set_rgb(n, color, count)
-    percent = n / count
+    percent = n / count.to_f
+    # decide color pixels
     case color
     when "R" 
         return percent ** 0.3 * 255

@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <p>有効数字は17桁です。</p>
     <form>
       <div v-if="errors.length != 0">
         <ul v-for="e in errors" :key="e">
