@@ -55,7 +55,7 @@ class Api::JuliasController < ApplicationController
 
   # check type int
   def check_int(key, value, errors)
-    if !value.is_a?(Integer)
+    if !value.is_a?(Float)
         errors.push({key=> "数値を入力してください"})
     end
   end
@@ -66,7 +66,7 @@ class Api::JuliasController < ApplicationController
             z_real = ((max_x - min_x) / width) * x + min_x
             z_imag = ((max_y - min_y) / height) * y + min_y
 
-            set_pixel_color(image_data, width, height, x, y, z_real,z_imag, count,c_real, c_imag)
+            set_pixel_color(image_data, width, height, x, y, z_real,z_imag, count, c_real, c_imag)
         end
     end
   end
