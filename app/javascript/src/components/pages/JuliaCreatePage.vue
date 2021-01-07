@@ -40,6 +40,8 @@
 <script>
 import { ref, reactive, onMounted } from "vue";
 //import { useValidation } from "vue-composable";# ダウンロード
+import axios from "axios";
+
 import juliaCanvas from "@/components/organisms/JuliaCanvas.vue";
 
 export default {
@@ -47,11 +49,11 @@ export default {
   components: { juliaCanvas },
   setup() {
     const juliaParams = reactive({
-      min_x: "",
-      max_x: "",
-      min_y: "",
-      max_y: "",
-      comp_const: { re: "", im: "" },
+      min_x: 0,
+      max_x: 0,
+      min_y: 0,
+      max_y: 0,
+      comp_const: { re: 0, im: 0 },
     });
     const errors = ref([]);
 
@@ -59,6 +61,19 @@ export default {
       // validete
       //if validete return
       console.log(juliaParams);
+      axios
+        .post("/api/julias/create", juliaParams)
+        .then((response) => {
+          console.log("create");
+          let e = response.data;
+          console.log(e, response);
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response.data && error.response.data.errors) {
+            errors.value = error.response.data.errors;
+          }
+        });
     };
 
     return {
