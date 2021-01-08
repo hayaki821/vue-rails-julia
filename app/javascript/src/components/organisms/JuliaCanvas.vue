@@ -1,6 +1,6 @@
 <template>
   <div class="tx-center mt-2">
-    <canvas id="drawable" width="600" height="600"></canvas>
+    <canvas id="drawable" width="500" height="500"></canvas>
   </div>
 </template>
 
