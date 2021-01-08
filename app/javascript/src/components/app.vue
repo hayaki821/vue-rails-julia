@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <router-view></router-view>
+  <router-view />
 </template>
 
 <script>
@@ -11,13 +11,6 @@ export default {
   name: "app",
   components: {
     Header,
-  },
-  setup() {
-    const message = ref("Hello World");
-
-    return {
-      message,
-    };
   },
 };
 </script>

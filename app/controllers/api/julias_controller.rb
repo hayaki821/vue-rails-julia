@@ -41,7 +41,7 @@ class Api::JuliasController < ApplicationController
         end
     end
     if errors.length != 0 
-        render json: { errors: [errors] }, status: 404
+        render json: { errors: errors }, status: 404
     end
   end
 
