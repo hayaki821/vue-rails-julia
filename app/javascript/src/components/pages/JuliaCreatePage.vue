@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-2">
     <p>有効数字は17桁です。</p>
     <form>
       <div v-if="errors.length != 0">
@@ -45,6 +45,7 @@
     </form>
     <juliaCanvas :imageData="imageData" />
   </div>
+  <Loading :loading="loading" />
 </template>
 <script>
 import { ref, reactive, onMounted } from "vue";
@@ -52,10 +53,11 @@ import { ref, reactive, onMounted } from "vue";
 import axios from "axios";
 
 import juliaCanvas from "@/components/organisms/JuliaCanvas.vue";
+import Loading from "@/components/organisms/Loading.vue";
 
 export default {
   name: "juliaCreate",
-  components: { juliaCanvas },
+  components: { juliaCanvas, Loading },
   setup() {
     const juliaParams = reactive({
       min_x: -1.5,
@@ -66,22 +68,25 @@ export default {
     });
     const errors = ref([]);
     const imageData = ref([]);
+    const loading = ref(false);
 
     const createJulia = () => {
       // validete
       //if validete return
-      console.log(juliaParams);
+      loading.value = true;
       axios
         .post("/api/julias/create", juliaParams)
         .then((response) => {
           imageData.value = response.data.image_data;
-          console.log(imageData.value);
         })
         .catch((error) => {
           console.error(error);
           if (error.response.data && error.response.data.errors) {
             errors.value = error.response.data.errors;
           }
+        })
+        .finally(() => {
+          loading.value = false;
         });
     };
 
@@ -89,8 +94,11 @@ export default {
       juliaParams,
       imageData,
       errors,
+      loading,
       createJulia,
     };
   },
 };
 </script>
+<style scoped>
+</style>

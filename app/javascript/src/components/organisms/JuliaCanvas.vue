@@ -1,5 +1,5 @@
 <template>
-  <div class="canvas">
+  <div class="tx-center mt-2">
     <canvas id="drawable" width="600" height="600"></canvas>
   </div>
 </template>
@@ -36,8 +36,4 @@ export default {
 </script>
 
 <style>
-.canvas {
-  margin-top: 2em;
-  text-align: center;
-}
 </style>
