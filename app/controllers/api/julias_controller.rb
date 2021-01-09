@@ -1,4 +1,6 @@
 class Api::JuliasController < ApplicationController
+    protect_from_forgery :except => [:create]
+
     require './app/services/create_julia_service'
     before_action :params_type_validate, only: [:create]
   # POST /julias/create
