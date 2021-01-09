@@ -1,14 +1,8 @@
 <template>
   <div class="container mt-2">
     <p>有効数字は17桁です。</p>
+    <Error :errors="errors" :labels="labels" />
     <form>
-      <div v-if="errors.length != 0">
-        <ul v-for="e in errors" :key="e">
-          <li>
-            <p color="red">{{ e }}</p>
-          </li>
-        </ul>
-      </div>
       <div>
         <label>実数部最小値</label>
         <input v-model.number="juliaParams.min_x" type="number" step="0.1" />
@@ -54,11 +48,20 @@ import axios from "axios";
 
 import juliaCanvas from "@/components/organisms/JuliaCanvas.vue";
 import Loading from "@/components/organisms/Loading.vue";
-
+import Error from "@/components/organisms/Error.vue";
 export default {
   name: "juliaCreate",
-  components: { juliaCanvas, Loading },
+  components: { juliaCanvas, Loading, Error },
   setup() {
+    // params name
+    const labels = {
+      min_x: "実数部最小値",
+      max_x: "実数部最大値",
+      min_y: "虚数部最小値",
+      max_y: "虚数部最大値",
+      re: "複素定数(実部)",
+      im: "複素定数(虚部)",
+    };
     const juliaParams = reactive({
       min_x: -1.5,
       max_x: 1.5,
@@ -78,6 +81,7 @@ export default {
         .post("/api/julias/create", juliaParams)
         .then((response) => {
           imageData.value = response.data.image_data;
+          errors.value = [];
         })
         .catch((error) => {
           console.error(error);
@@ -91,6 +95,7 @@ export default {
     };
 
     return {
+      labels,
       juliaParams,
       imageData,
       errors,

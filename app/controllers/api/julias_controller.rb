@@ -1,5 +1,5 @@
 class Api::JuliasController < ApplicationController
-    protect_from_forgery :except => [:create]
+    protect_from_forgery :except => [:create] # csrf
 
     require './app/services/create_julia_service'
     before_action :params_type_validate, only: [:create]
