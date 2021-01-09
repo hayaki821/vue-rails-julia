@@ -5,7 +5,7 @@
 
 <script>
 import { ref } from "vue";
-import Header from "@/components/organisms/header.vue";
+import Header from "@/components/organisms/Header.vue";
 
 export default {
   name: "app",
