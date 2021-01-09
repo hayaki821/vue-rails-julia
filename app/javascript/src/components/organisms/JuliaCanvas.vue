@@ -20,13 +20,11 @@ export default {
     },
   },
   setup(props) {
-    // const canvas = document.getElementById("drawable");
-    // const context = canvas.getContext("2d");
     onMounted(() => {
       watchEffect(() => {
         const canvas = document.getElementById("drawable");
         const context = canvas.getContext("2d");
-        let imageData = context.getImageData(0, 0, canvas.width, canvas.height); //canvasエリアを指定
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height); //canvas erea
         setImageData(imageData, props.imageData);
         context.putImageData(imageData, 0, 0);
       });
