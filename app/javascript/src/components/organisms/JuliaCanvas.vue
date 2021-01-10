@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { watch, onMounted, watchEffect } from "vue";
+import { onMounted, watchEffect } from "vue";
 
 function setImageData(imageData, newVal) {
   for (var i = 0; i < imageData.data.length; i++) {
