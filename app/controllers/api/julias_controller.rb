@@ -43,6 +43,7 @@ class Api::JuliasController < ApplicationController
 
   # check type int
   def check_number(key, value, errors)
+    # If not a number, error
     if !value.is_a?(Numeric)
         errors.push({key=> "数値を入力してください"})
     end
