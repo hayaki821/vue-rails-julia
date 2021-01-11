@@ -8,7 +8,7 @@
 3,yarn add vue-router@^4
 4,yarn add axios --save
 5,docker-compose up
-6,http://localhost:8080 にアクセス
+6,http://localhost:8080 または http://localhost:8080/satori/julia にアクセス
 ```
 ## アプリケーションの概要
 ```
