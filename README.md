@@ -2,13 +2,15 @@
 
 ## 環境構築手順
 ```
-1,git cloneを行う
+1,git clone git@github.com:hayaki821/vue-rails-julia.git を行う
 2,cd vue-rails-julia
-2,yarn add vue@next vue-loader@next @vue/compiler-sfc
-3,yarn add vue-router@^4
-4,yarn add axios --save
-5,docker-compose up
-6,http://localhost:8080 または http://localhost:8080/satori/julia にアクセス
+3,yarn add vue@next vue-loader@next @vue/compiler-sfc
+4,yarn add vue-router@^4
+5,yarn add axios --save
+6,docker-compose up
+7,http://localhost:8080 または http://localhost:8080/satori/julia にアクセス
+
+tar.gzを解凍した場合1,3,4,5をスキップする
 ```
 ## アプリケーションの概要
 ```
