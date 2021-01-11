@@ -79,7 +79,6 @@ export default {
         return;
       }
       // if key2 == null
-      console.log(juliaParams);
       juliaParams[key] = Number(value);
     };
 

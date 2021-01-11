@@ -9,19 +9,21 @@ class CreateJuliaService
         @count = count # boundary condition
         @width = width # canvas width
         @height = height # canvas height
-        @rgb = 255 # rgb max concentration 
+        @rgba = 255 # rgba max concentration 
         @image_data = [] # julia pixel data
     end
 
     def call
         @height.times do |y|
             @width.times do |x|
+                # Coordinate calculation
                 z_real = ((@max_x - @min_x) / @width) * x + @min_x
                 z_imag = ((@max_y - @min_y) / @height) * y + @min_y
-    
+                # Value per pixel coordinate
                 set_pixel_color(x, y, z_real, z_imag)
             end
         end
+        # julia rgba data
         return @image_data
     end
     
@@ -30,10 +32,10 @@ class CreateJuliaService
         @count.times do |i|
              # if Divergence
             if z_real * z_real + z_imag * z_imag >= 4
-                @image_data[(y * @width + x) * 4 + 0] = set_rgb(i,"R")
-                @image_data[(y * @width + x) * 4 + 1] = set_rgb(i,"G")
-                @image_data[(y * @width + x) * 4 + 2] = set_rgb(i,"B")
-                @image_data[(y * @width + x) * 4 + 3] = @rgb
+                @image_data[(y * @width + x) * 4 + 0] = set_rgba(i,"R")
+                @image_data[(y * @width + x) * 4 + 1] = set_rgba(i,"G")
+                @image_data[(y * @width + x) * 4 + 2] = set_rgba(i,"B")
+                @image_data[(y * @width + x) * 4 + 3] = set_rgba(i,"A")
                 return
             end
     
@@ -48,11 +50,11 @@ class CreateJuliaService
         @image_data[(y * @width + x) * 4 + 0] = 0
         @image_data[(y * @width + x) * 4 + 1] = 0
         @image_data[(y * @width + x) * 4 + 2] = 0
-        @image_data[(y * @width + x) * 4 + 3] = @rgb 
+        @image_data[(y * @width + x) * 4 + 3] = @rgba
       end
     
       # Calculation color
-      def set_rgb(n, color)
+      def set_rgba(n, color)
         # percentage
         percent = n / @count.to_f
         # specific gravity
@@ -60,11 +62,13 @@ class CreateJuliaService
         # decide color pixels
         case color
         when "R" 
-            return (percent ** w * @rgb).round
+            return (percent ** w * @rgba).round
         when "G" 
             return 0
         when "B" 
-            return ((1 - percent) ** w * @rgb).round
+            return ((1 - percent) ** w * @rgba).round
+        when "A"
+            return @rgba
         else
             return 0
         end    
