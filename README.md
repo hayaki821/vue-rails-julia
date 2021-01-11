@@ -3,7 +3,7 @@
 ## 環境構築手順
 ```
 1,git clone git@github.com:hayaki821/vue-rails-julia.git を行う
-2,cd vue-rails-julia
+2,cd vue-rails-julia (vue-rails-juliaまで移動)
 3,yarn add vue@next vue-loader@next @vue/compiler-sfc
 4,yarn add vue-router@^4
 5,yarn add axios --save
